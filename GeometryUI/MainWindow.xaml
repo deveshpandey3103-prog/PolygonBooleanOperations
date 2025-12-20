@@ -1,0 +1,49 @@
+﻿<Window x:Class="GeometryUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GeometryUI"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Toolbar -->
+        <StackPanel Orientation="Horizontal" Margin="5">
+            <Button Content="Finish Polygon A" Margin="5"
+                    Click="FinishPolygonA_Click"/>
+            <Button Content="Finish Polygon B" Margin="5"
+                    Click="FinishPolygonB_Click"/>
+            <Button Content="Clear" Margin="5"
+                    Click="Clear_Click"/>
+            <!-- Boolean operations -->
+            <Separator Width="20"/>
+
+            <Button Content="Intersection (A ∩ B)"
+            Margin="5"
+            Click="Intersection_Click"/>
+
+            <Button Content="Union (A ∪ B)"
+            Margin="5"
+            Click="Union_Click"/>
+
+            <Button Content="A − B"
+            Margin="5"
+            Click="AminusB_Click"/>
+
+            <Button Content="B − A"
+            Margin="5"
+            Click="BminusA_Click"/>
+        </StackPanel>
+
+        <!-- Drawing Area -->
+        <Canvas x:Name="DrawCanvas"
+                Grid.Row="1"
+                Background="White"
+                MouseLeftButtonDown="DrawCanvas_MouseLeftButtonDown"/>
+    </Grid>
+</Window>

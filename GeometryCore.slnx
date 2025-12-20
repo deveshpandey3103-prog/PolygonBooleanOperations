@@ -1,0 +1,10 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="GeometryCLI/GeometryCLI.vcxproj" />
+  <Project Path="GeometryCore/GeometryCore.vcxproj" Id="e801a4fc-c41f-4412-954d-13a287dd6a45" />
+  <Project Path="GeometryUI/GeometryUI.csproj" Id="6ebce0e9-5114-4b0d-ad68-122b58ba967c" />
+</Solution>
