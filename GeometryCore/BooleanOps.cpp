@@ -215,4 +215,71 @@ std::vector<Polygon> BooleanOps::ComputeBoolean(
     }
 }
 
+std::vector<Polygon>
+BooleanOps::ComputeBoolean2(
+    const Polygon& A,
+    const Polygon& B,
+    BoolOp operation)
+{
+    std::vector<Polygon> result;
+
+    // ---------------------------------
+    // Extract outer rings only
+    // (GH does NOT handle holes)
+    // ---------------------------------
+    std::vector<Point> polyA = A.outer.vertices;
+    std::vector<Point> polyB = B.outer.vertices;
+
+    PolygonUtilityExtension gh;
+
+    // ---------------------------------
+    // Map BoolOp → GHOp
+    // ---------------------------------
+    GHOp ghOp;
+    switch (operation)
+    {
+    case BoolOp::Intersection:
+        ghOp = GHOp::Intersection;
+        break;
+
+    case BoolOp::Union:
+        ghOp = GHOp::Union;
+        break;
+
+    case BoolOp::AminusB:
+        ghOp = GHOp::DifferenceAB;
+        break;
+
+    case BoolOp::BminusA:
+        ghOp = GHOp::DifferenceBA;
+        break;
+
+    default:
+        return result;
+    }
+
+    // ---------------------------------
+    // Single GH compute call
+    // ---------------------------------
+    std::vector<std::vector<Point>> ghResult =
+        gh.Compute(polyA, polyB, ghOp);
+
+    // ---------------------------------
+    // Convert GH loops → Polygon
+    // ---------------------------------
+    for (const auto& loop : ghResult)
+    {
+        if (loop.size() < 3)
+            continue;
+
+        Polygon p;
+        p.outer.vertices = loop;
+        result.push_back(p);
+    }
+
+    return result;
+}
+
+
+
 

@@ -23,16 +23,19 @@ bool Polygonutility::PointInRing(const Point& p, const Ring& r)
 
 bool Polygonutility::PointInPolygon(const Point& p, const Polygon& poly)
 {
-	
+	//  Outside outer boundary → NOT inside polygon
 	if (!PointInRing(p, poly.outer))
 		return false;
 
-	for (auto& hole : poly.holes)
+	//  Inside any hole → NOT inside polygon
+	for (const Ring& hole : poly.holes)
+	{
 		if (PointInRing(p, hole))
 			return false;
+	}
 
+	// Inside outer & outside all holes → inside
 	return true;
-	
 }
 
 
@@ -104,21 +107,21 @@ void Polygonutility::CollectIntersectionPoints(
 	const Polygon& B,
 	std::vector<Point>& outPts)
 {
-	// 1️⃣ A vertices inside B
+	// A vertices inside B
 	for (const Point& p : A.outer.vertices)
 	{
 		if (PointInPolygon(p, B))
 			outPts.push_back(p);
 	}
 
-	// 2️⃣ B vertices inside A
+	//  B vertices inside A
 	for (const Point& p : B.outer.vertices)
 	{
 		if (PointInPolygon(p, A))
 			outPts.push_back(p);
 	}
 
-	// 3️⃣ Edge–edge intersections
+	//  Edge–edge intersections
 	const auto& aV = A.outer.vertices;
 	const auto& bV = B.outer.vertices;
 
@@ -290,7 +293,7 @@ std::vector<Point> Polygonutility::ClipPolygonOutside(const std::vector<Point>& 
 			bool Ein = Inside(E, A, B, clipCCW);
 			bool Sin = Inside(S, A, B, clipCCW);
 
-			// 🔴 KEEP OUTSIDE instead of inside
+			// KEEP OUTSIDE instead of inside
 			if (!Ein)
 			{
 				if (Sin)

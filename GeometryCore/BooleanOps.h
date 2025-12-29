@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "Polygonutility.h"
+#include "PolygonUtilityExtension.h"
 
 enum class BoolOp {
     Union,
@@ -17,5 +18,7 @@ public:
         const Polygon& A,
         const Polygon& B,
         BoolOp operation);
+
+    std::vector<Polygon> ComputeBoolean2(const Polygon& A, const Polygon& B, BoolOp operation);
 };
 

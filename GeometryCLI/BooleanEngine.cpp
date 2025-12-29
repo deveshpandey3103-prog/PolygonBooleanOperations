@@ -91,7 +91,7 @@ List<List<Point2D>^>^ BooleanEngine::Compute(
 	BooleanOps boolEngine;
     // Call native Boolean engine
     std::vector<Polygon> result =
-        boolEngine.ComputeBoolean(polyA, polyB, nativeOp);
+        boolEngine.ComputeBoolean2(polyA, polyB, nativeOp);
 
     // Convert native → managed
     auto managedResult = gcnew List<List<Point2D>^>();
